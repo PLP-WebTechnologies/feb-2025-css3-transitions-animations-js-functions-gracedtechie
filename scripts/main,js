@@ -1,0 +1,28 @@
+const btn = document.getElementById('animateBtn');
+const colorPicker = document.getElementById('favColor');
+
+// Load stored color preference on page load
+window.onload = () => {
+  const savedColor = localStorage.getItem('buttonColor');
+  if (savedColor) {
+    btn.style.backgroundColor = savedColor;
+    colorPicker.value = savedColor;
+  }
+};
+
+// Store color preference when user picks a new color
+colorPicker.addEventListener('input', (e) => {
+  const selectedColor = e.target.value;
+  btn.style.backgroundColor = selectedColor;
+  localStorage.setItem('buttonColor', selectedColor);
+});
+
+// Trigger pulse animation when button is clicked
+btn.addEventListener('click', () => {
+  btn.classList.add('pulseAnimation');
+
+  // Remove the animation class after it ends to allow re-triggering
+  btn.addEventListener('animationend', () => {
+    btn.classList.remove('pulseAnimation');
+  }, { once: true });
+});
